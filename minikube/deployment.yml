@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coding-challenge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: coding-challenge
+  strategy:    
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25% 
+  template:
+    metadata:
+      labels:
+        deployment: coding-challenge
+    spec:
+      containers:
+        - env:
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                key: aws_access_key_id
+                name: aws-secret
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                key: aws_secret_access_key
+                name: aws-secret
+          image: docker.io/pakala27/awscli:v1
+          imagePullPolicy: Always
+          name: coding-challenge
+          resources:
+            limits:
+              cpu: '1'
+              memory: 100Mi
+            requests:
+              cpu: 30m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /etc/aws-secret
+              name: aws-secret
+              readOnly: true
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: aws-secret
+          secret:
+            defaultMode: 420
+            items:
+              - key: aws_access_key_id
+                path: test_aws_access_key_id
+              - key: aws_secret_access_key
+                path: test_aws_secret_access_key
+            secretName: aws-secret
