@@ -30,6 +30,7 @@ function enumerate_objectstore() {
   echo "==========================================="
   echo "Enumerating content from the object s3://terraform-challenge-bucket-2 "
   aws s3 ls s3://terraform-challenge-bucket-2 --recursive --profile coding
+  #Running the function in infinite loop to just kepp the script alive
   sleep 30
   done
 } 

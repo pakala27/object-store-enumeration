@@ -21,6 +21,7 @@ AWS Secret Access Key [None]: <secret>
 Default region name [None]: <region>
 Default output format [None]: <output format>
 Create a directry to host the terraform config file
+
 #mkdir terraform; cd terraform
 
 Initiate the terraform
@@ -98,6 +99,3 @@ Verify the pod log in minikube dashboard.
 
 Desclaimer :
   I have not automated the steps for installing minikube as these are few steps. Also, I concetrated on other steps more than building the container platform which takes time.
-
-  
-

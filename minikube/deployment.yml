@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: coding-challenge
+  name: object-store-enumeration
 spec:
   replicas: 1
   selector:
     matchLabels:
-      deployment: coding-challenge
+      deployment: object-store-enumeration
   strategy:    
     type: RollingUpdate
     rollingUpdate:
@@ -15,7 +15,7 @@ spec:
   template:
     metadata:
       labels:
-        deployment: coding-challenge
+        deployment: object-store-enumeration
     spec:
       containers:
         - env:
@@ -31,7 +31,7 @@ spec:
                 name: aws-secret
           image: docker.io/pakala27/awscli:v1
           imagePullPolicy: Always
-          name: coding-challenge
+          name: object-store-enumeration
           resources:
             limits:
               cpu: '1'
